@@ -1,0 +1,23 @@
+<?php
+
+namespace App\Console;
+
+use App\Jobs\SendDueDateReminders;
+use App\Jobs\UpdateLeaderboard;
+use Illuminate\Console\Scheduling\Schedule;
+use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+
+class Kernel extends ConsoleKernel
+{
+    protected function schedule(Schedule $schedule): void
+    {
+        $schedule->job(new SendDueDateReminders)->hourly();
+        $schedule->job(new UpdateLeaderboard)->dailyAt('00:00');
+    }
+
+    protected function commands(): void
+    {
+        $this->load(__DIR__ . '/Commands');
+        require base_path('routes/console.php');
+    }
+}

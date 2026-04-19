@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login — CampusShare</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>body{font-family:'Plus Jakarta Sans',sans-serif;}</style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 flex items-center justify-center p-4">
+    <div class="w-full max-w-md">
+        <div class="text-center mb-8">
+            <div class="inline-flex items-center justify-center w-14 h-14 bg-blue-600 rounded-2xl mb-4">
+                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+            </div>
+            <h1 class="text-3xl font-bold text-white">CampusShare</h1>
+            <p class="text-blue-300 mt-1">Share resources, build community</p>
+        </div>
+
+        <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-8">
+            <h2 class="text-xl font-bold text-white mb-6">Welcome back</h2>
+
+            <?php if($errors->any()): ?>
+            <div class="mb-4 bg-red-500/20 border border-red-500/30 text-red-200 px-4 py-3 rounded-xl text-sm">
+                <?php echo e($errors->first()); ?>
+
+            </div>
+            <?php endif; ?>
+
+            <form method="POST" action="<?php echo e(route('login.post')); ?>" class="space-y-4">
+                <?php echo csrf_field(); ?>
+                <div>
+                    <label class="block text-sm font-medium text-blue-200 mb-1">Email</label>
+                    <input type="email" name="email" value="<?php echo e(old('email')); ?>" required
+                        class="w-full bg-white/10 border border-white/20 text-white placeholder-blue-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        placeholder="you@campus.edu">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-blue-200 mb-1">Password</label>
+                    <input type="password" name="password" required
+                        class="w-full bg-white/10 border border-white/20 text-white placeholder-blue-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        placeholder="••••••••">
+                </div>
+                <div class="flex items-center gap-2">
+                    <input type="checkbox" name="remember" id="remember" class="rounded">
+                    <label for="remember" class="text-sm text-blue-200">Remember me</label>
+                </div>
+                <button type="submit"
+                    class="w-full bg-blue-600 hover:bg-blue-500 text-white font-semibold py-3 rounded-xl transition-colors mt-2">
+                    Sign In
+                </button>
+            </form>
+
+            <p class="text-center text-blue-300 text-sm mt-6">
+                Don't have an account?
+                <a href="<?php echo e(route('register')); ?>" class="text-white font-semibold hover:underline">Register</a>
+            </p>
+        </div>
+
+        <p class="text-center text-blue-400 text-xs mt-6">
+            Demo: samantha@campus.edu / password
+        </p>
+    </div>
+</body>
+</html>
+<?php /**PATH C:\xampp\htdocs\campusshare_final\resources\views/auth/login.blade.php ENDPATH**/ ?>
