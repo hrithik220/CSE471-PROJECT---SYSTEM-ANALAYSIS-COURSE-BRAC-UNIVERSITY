@@ -53,10 +53,10 @@
                 <div class="flex flex-col items-center">
                     <div class="text-3xl mb-1"><?php echo e($medals[$podiumPos]); ?></div>
                     <div class="w-14 h-14 rounded-full bg-indigo-200 flex items-center justify-center text-xl font-bold text-indigo-700 mb-1">
-                        <?php echo e(strtoupper(substr($entry->user->name, 0, 1))); ?>
+                        <?php echo e(strtoupper(substr($entry->name, 0, 1))); ?>
 
                     </div>
-                    <p class="text-xs font-semibold text-center text-gray-700 truncate w-full text-center"><?php echo e($entry->user->name); ?></p>
+                    <p class="text-xs font-semibold text-center text-gray-700 truncate w-full text-center"><?php echo e($entry->name); ?></p>
                     <p class="text-sm font-bold text-indigo-600"><?php echo e(number_format($entry->total_points)); ?> pts</p>
                     <div class="<?php echo e($podiumH[$podiumPos]); ?> w-full rounded-t-xl mt-2 border-t-2 <?php echo e($colors[$podiumPos]); ?>"></div>
                 </div>
@@ -79,7 +79,7 @@
         </thead>
         <tbody class="divide-y divide-gray-100">
             <?php $__empty_1 = true; $__currentLoopData = $entries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $entry): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
-                <tr class="<?php echo e($entry->user_id === auth()->id() ? 'bg-indigo-50' : 'hover:bg-gray-50'); ?> transition">
+                <tr class="<?php echo e($entry->id === auth()->id() ? 'bg-indigo-50' : 'hover:bg-gray-50'); ?> transition">
                     <td class="px-4 py-3 font-bold text-gray-700">
                         <?php if($entry->rank <= 3): ?>
                             <?php echo e(['1'=>'🥇','2'=>'🥈','3'=>'🥉'][$entry->rank]); ?>
@@ -92,13 +92,13 @@
                     <td class="px-4 py-3">
                         <div class="flex items-center gap-2">
                             <div class="w-7 h-7 rounded-full bg-indigo-200 flex items-center justify-center text-xs font-bold text-indigo-700">
-                                <?php echo e(strtoupper(substr($entry->user->name, 0, 1))); ?>
+                                <?php echo e(strtoupper(substr($entry->name, 0, 1))); ?>
 
                             </div>
                             <span class="font-medium text-gray-800">
-                                <?php echo e($entry->user->name); ?>
+                                <?php echo e($entry->name); ?>
 
-                                <?php if($entry->user_id === auth()->id()): ?>
+                                <?php if($entry->id === auth()->id()): ?>
                                     <span class="text-xs text-indigo-500">(you)</span>
                                 <?php endif; ?>
                             </span>
@@ -117,8 +117,6 @@
     </table>
 </div>
 
-<div class="mt-4"><?php echo e($entries->links()); ?></div>
-
 
 <div class="mt-8 bg-white rounded-2xl shadow p-6">
     <h2 class="font-semibold text-gray-700 mb-4">🎖 Badge Milestones</h2>
@@ -135,5 +133,4 @@
     </div>
 </div>
 <?php $__env->stopSection(); ?>
-
 <?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\campusshare_final\resources\views/leaderboard/index.blade.php ENDPATH**/ ?>

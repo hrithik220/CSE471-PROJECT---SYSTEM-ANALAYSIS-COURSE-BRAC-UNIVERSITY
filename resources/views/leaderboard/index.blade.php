@@ -54,9 +54,9 @@
                 <div class="flex flex-col items-center">
                     <div class="text-3xl mb-1">{{ $medals[$podiumPos] }}</div>
                     <div class="w-14 h-14 rounded-full bg-indigo-200 flex items-center justify-center text-xl font-bold text-indigo-700 mb-1">
-                        {{ strtoupper(substr($entry->user->name, 0, 1)) }}
+                        {{ strtoupper(substr($entry->name, 0, 1)) }}
                     </div>
-                    <p class="text-xs font-semibold text-center text-gray-700 truncate w-full text-center">{{ $entry->user->name }}</p>
+                    <p class="text-xs font-semibold text-center text-gray-700 truncate w-full text-center">{{ $entry->name }}</p>
                     <p class="text-sm font-bold text-indigo-600">{{ number_format($entry->total_points) }} pts</p>
                     <div class="{{ $podiumH[$podiumPos] }} w-full rounded-t-xl mt-2 border-t-2 {{ $colors[$podiumPos] }}"></div>
                 </div>
@@ -79,7 +79,7 @@
         </thead>
         <tbody class="divide-y divide-gray-100">
             @forelse($entries as $entry)
-                <tr class="{{ $entry->user_id === auth()->id() ? 'bg-indigo-50' : 'hover:bg-gray-50' }} transition">
+                <tr class="{{ $entry->id === auth()->id() ? 'bg-indigo-50' : 'hover:bg-gray-50' }} transition">
                     <td class="px-4 py-3 font-bold text-gray-700">
                         @if($entry->rank <= 3)
                             {{ ['1'=>'🥇','2'=>'🥈','3'=>'🥉'][$entry->rank] }}
@@ -90,11 +90,11 @@
                     <td class="px-4 py-3">
                         <div class="flex items-center gap-2">
                             <div class="w-7 h-7 rounded-full bg-indigo-200 flex items-center justify-center text-xs font-bold text-indigo-700">
-                                {{ strtoupper(substr($entry->user->name, 0, 1)) }}
+                                {{ strtoupper(substr($entry->name, 0, 1)) }}
                             </div>
                             <span class="font-medium text-gray-800">
-                                {{ $entry->user->name }}
-                                @if($entry->user_id === auth()->id())
+                                {{ $entry->name }}
+                                @if($entry->id === auth()->id())
                                     <span class="text-xs text-indigo-500">(you)</span>
                                 @endif
                             </span>
@@ -112,8 +112,6 @@
         </tbody>
     </table>
 </div>
-
-<div class="mt-4">{{ $entries->links() }}</div>
 
 {{-- Badge Legend --}}
 <div class="mt-8 bg-white rounded-2xl shadow p-6">

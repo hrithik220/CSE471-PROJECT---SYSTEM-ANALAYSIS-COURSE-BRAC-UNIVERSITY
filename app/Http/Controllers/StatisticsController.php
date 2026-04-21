@@ -15,17 +15,33 @@ class StatisticsController extends Controller
 
     public function index()
     {
-        $user = Auth::user()->load(['statistic', 'badges']);
+        $user = Auth::user()->load(['badges']);
 
-        $stat = $user->statistic ?? new UserStatistic([
-            'total_items_lent'           => 0,
-            'total_items_borrowed'       => 0,
-            'karma_points'               => 0,
-            'environmental_impact_score' => 0,
-            'items_saved_from_purchase'  => 0,
+        $totalLent = DB::table('transactions')
+            ->where('lender_id', $user->id)
+            ->whereIn('status', ['active', 'overdue', 'returned'])
+            ->count();
+
+        $totalBorrowed = DB::table('transactions')
+            ->where('borrower_id', $user->id)
+            ->whereIn('status', ['active', 'overdue', 'returned'])
+            ->count();
+
+        $positiveReviews = DB::table('reviews')
+            ->where('reviewee_id', $user->id)
+            ->where('rating', '>=', 4)
+            ->count();
+
+        $karmaPoints = ($totalLent * 10) + ($positiveReviews * 5);
+
+        $stat = new UserStatistic([
+            'total_items_lent'           => $totalLent,
+            'total_items_borrowed'       => $totalBorrowed,
+            'karma_points'               => $karmaPoints,
+            'environmental_impact_score' => $totalLent * 2.5,
+            'items_saved_from_purchase'  => $totalLent,
         ]);
 
-        // Monthly trend - last 6 months lending
         $monthlyLending = DB::table('transactions')
             ->selectRaw('MONTH(created_at) as month, YEAR(created_at) as year, COUNT(*) as count')
             ->where('lender_id', $user->id)
