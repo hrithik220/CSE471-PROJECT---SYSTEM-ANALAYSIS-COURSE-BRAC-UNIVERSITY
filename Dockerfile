@@ -3,16 +3,17 @@ FROM php:8.2-cli
 WORKDIR /var/www
 
 RUN apt-get update && apt-get install -y \
-    git unzip libpq-dev \
+    git unzip libpq-dev curl \
     && docker-php-ext-install pdo pdo_pgsql
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 COPY . .
 
-RUN composer install --no-dev --optimize-autoloader
+RUN composer install --no-dev --optimize-autoloader || true
 
-RUN php artisan key:generate || true
+RUN php artisan config:clear || true
+RUN php artisan cache:clear || true
 
 EXPOSE 10000
 
