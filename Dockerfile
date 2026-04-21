@@ -1,17 +1,20 @@
-FROM php:8.4-cli
+FROM php:8.2-apache
 
 WORKDIR /var/www
 
 RUN apt-get update && apt-get install -y \
-    git unzip libpq-dev curl \
+    libpq-dev \
+    zip unzip git curl \
     && docker-php-ext-install pdo pdo_pgsql
-
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 COPY . .
 
-RUN composer install --no-dev --optimize-autoloader --ignore-platform-reqs
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-EXPOSE 10000
+RUN composer install --no-dev --optimize-autoloader
 
-CMD php artisan serve --host=0.0.0.0 --port=10000
+RUN chown -R www-data:www-data /var/www
+
+EXPOSE 80
+
+CMD ["apache2-foreground"]
