@@ -1,4 +1,4 @@
-FROM php:8.2-cli
+FROM php:8.4-cli
 
 WORKDIR /var/www
 
@@ -10,10 +10,7 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 COPY . .
 
-RUN composer install --no-dev --optimize-autoloader || true
-
-RUN php artisan config:clear || true
-RUN php artisan cache:clear || true
+RUN composer install --no-dev --optimize-autoloader --ignore-platform-reqs
 
 EXPOSE 10000
 
