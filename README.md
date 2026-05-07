@@ -40,10 +40,7 @@ Student	hrithik@campus.com
 	password
 Admin	admin@campus.com
 	password
-📁 Project Structure
-app/
-├── Http/Controllers/
-├── Models/
+
 database/migrations/
 resources/views/
 routes/web.php
