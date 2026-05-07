@@ -36,9 +36,9 @@ Open → http://127.0.0.1:8000
 
 🔐 Demo Accounts
 Role	Email	Password
-Student	hrithik@campus.com
+Student log in - hrithik@campus.com
 	password
-Admin	admin@campus.com
+Admin log in - admin@campus.com
 	password
 
 database/migrations/
