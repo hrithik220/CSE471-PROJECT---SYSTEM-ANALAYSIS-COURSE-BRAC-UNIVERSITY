@@ -97,26 +97,3 @@ transactions — id, resource_id, lender_id, borrower_id, borrow_date, due_date,
 
 
 
-
-hrithik/
-├── app/
-│   ├── Http/Controllers/
-│   │   ├── ResourceController.php
-│   │   ├── ResourcePostController.php
-│   │   ├── MapController.php
-│   │   └── DashboardController.php
-│   └── Models/
-│       ├── Resource.php
-│       ├── Category.php
-│       ├── ResourceReview.php
-│       └── Transaction.php
-├── database/migrations/
-├── resources/views/
-│   ├── layouts/app.blade.php
-│   ├── resources/
-│   │   ├── show.blade.php
-│   │   ├── edit.blade.php
-│   │   └── create.blade.php
-│   ├── map/index.blade.php
-│   └── dashboard/index.blade.php
-└── routes/web.php
